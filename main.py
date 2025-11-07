@@ -3,6 +3,7 @@
 import pygame
 from constants import *
 from logger import log_state
+from player import *
 def main():
     print("Starting Asteroids!\nScreen width: 1280\nScreen height: 720")
 
@@ -17,9 +18,13 @@ def main():
             if event.type == pygame.QUIT:
                 return
         screen.fill("black")
+        player1 = Player(x = SCREEN_WIDTH / 2, y = SCREEN_HEIGHT / 2)
+        player1.draw(screen)
         pygame.display.flip()
         clock.tick(60)
         dt = clock.tick(60) / 1000
+
+        
 
         
 
