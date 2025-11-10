@@ -1,9 +1,11 @@
 import pygame
+import sys
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
-from logger import log_state
+from logger import log_state, log_event
 from player import Player
+from circleshape import CircleShape
 
 
 def main():
@@ -22,7 +24,7 @@ def main():
     Player.containers = (updatable, drawable)
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-
+    
     dt = 0
 
     while True:
@@ -33,15 +35,22 @@ def main():
                 return
 
         updatable.update(dt)
-
+        print(hasattr(player, "collides_with")) 
+        for obj in asteroids:
+            if player.collides_with(obj):
+                log_event("player_hit")
+                print("Game over!")
+                sys.exit()
         screen.fill("black")
 
         for obj in drawable:
             obj.draw(screen)
 
         pygame.display.flip()
-
-        # limit the framerate to 60 FPS
+        print(isinstance(player, CircleShape))
+        print(hasattr(player, "collides_with"))
+        print(Player.__mro__)
+       # limit the framerate to 60 FPS
         dt = clock.tick(60) / 1000
 
 
